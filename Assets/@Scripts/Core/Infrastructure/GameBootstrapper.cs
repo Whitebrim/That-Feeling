@@ -1,18 +1,18 @@
 using System;
+using System.Threading;
 using Core.Infrastructure.States;
 using Core.Services;
 using Core.Services.AssetManagement;
 using Core.Services.Audio;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.SceneManagement;
 using VContainer;
-using VContainer.Unity;
 
 namespace Core.Infrastructure
 {
     [RequireComponent(typeof(MainThreadDispatcher), typeof(AudioSystem))]
-    public class GameBootstrapper : MonoBehaviour, ICoroutineRunner, IStartable
+    public class GameBootstrapper : MonoBehaviour, ICoroutineRunner
     {
         public static bool IsInitialized;
 
@@ -25,28 +25,23 @@ namespace Core.Infrastructure
         {
             _stateMachine = stateMachine;
         }
-
-        void IStartable.Start()
+        
+        // ReSharper disable once Unity.IncorrectMethodSignature
+        private async UniTaskVoid Start()
         {
-            if (SceneManager.GetActiveScene().buildIndex != 0)
-            {
-                if (!IsInitialized) SceneManager.LoadScene(0);
-                Destroy(gameObject);
-                return;
-            }
-            ApplicationInit();
+            IsInitialized = true;
+        
+            await ApplicationInit();
 
             DontDestroyOnLoad(this);
 
-            IsInitialized = true;
-
             _stateMachine.Enter<BootstrapState>();
         }
-
-        private void ApplicationInit()
+        
+        private async UniTask ApplicationInit()
         {
             Application.targetFrameRate = (int)Math.Ceiling(Screen.currentResolution.refreshRateRatio.value);
-            Addressables.InitializeAsync();
+            await Addressables.InitializeAsync();
         }
     }
 }

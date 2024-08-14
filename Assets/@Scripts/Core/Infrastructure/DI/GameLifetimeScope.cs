@@ -3,6 +3,7 @@ using Core.Services;
 using Core.Services.AssetManagement;
 using Core.Services.Audio;
 using Core.Services.SceneLoader;
+using Core.Signals;
 using MessagePipe;
 using UnityEngine;
 using Utils;
@@ -40,11 +41,9 @@ namespace Core.Infrastructure.DI
 
             builder.Register<SceneLoader>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<AddressablesProvider>(Lifetime.Singleton).AsImplementedInterfaces();
-            builder.RegisterInstance<ConditionalAssetManager>(conditionalAssetManager);
+            builder.RegisterInstance(conditionalAssetManager);
 
             RegisterMessagePipe(builder);
-            
-            builder.RegisterEntryPoint<GameBootstrapper>();
         }
 
         private void RegisterMessagePipe(IContainerBuilder builder)
@@ -54,6 +53,8 @@ namespace Core.Infrastructure.DI
         
             // Setup GlobalMessagePipe to enable diagnostics window and global function
             builder.RegisterBuildCallback(c => GlobalMessagePipe.SetProvider(c.AsServiceProvider()));
+
+            builder.RegisterMessageBroker<OnApplicationFocusSignal>(options);
         }
     }
 }
