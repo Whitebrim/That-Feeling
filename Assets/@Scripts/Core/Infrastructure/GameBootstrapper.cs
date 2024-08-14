@@ -7,11 +7,12 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 using VContainer;
+using VContainer.Unity;
 
 namespace Core.Infrastructure
 {
     [RequireComponent(typeof(MainThreadDispatcher), typeof(AudioSystem))]
-    public class GameBootstrapper : MonoBehaviour, ICoroutineRunner
+    public class GameBootstrapper : MonoBehaviour, ICoroutineRunner, IStartable
     {
         public static bool IsInitialized;
 
@@ -25,7 +26,7 @@ namespace Core.Infrastructure
             _stateMachine = stateMachine;
         }
 
-        private void Awake()
+        void IStartable.Start()
         {
             if (SceneManager.GetActiveScene().buildIndex != 0)
             {

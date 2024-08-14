@@ -43,6 +43,8 @@ namespace Core.Infrastructure.DI
             builder.RegisterInstance<ConditionalAssetManager>(conditionalAssetManager);
 
             RegisterMessagePipe(builder);
+            
+            builder.RegisterEntryPoint<GameBootstrapper>();
         }
 
         private void RegisterMessagePipe(IContainerBuilder builder)
