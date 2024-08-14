@@ -3,6 +3,7 @@ using Core.Services;
 using Core.Services.AssetManagement;
 using Core.Services.Audio;
 using Core.Services.SceneLoader;
+using MessagePipe;
 using UnityEngine;
 using Utils;
 using VContainer;
@@ -40,6 +41,17 @@ namespace Core.Infrastructure.DI
             builder.Register<SceneLoader>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<AddressablesProvider>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.RegisterInstance<ConditionalAssetManager>(conditionalAssetManager);
+
+            RegisterMessagePipe(builder);
+        }
+
+        private void RegisterMessagePipe(IContainerBuilder builder)
+        {
+            // RegisterMessagePipe returns options.
+            var options = builder.RegisterMessagePipe(/* configure option */);
+        
+            // Setup GlobalMessagePipe to enable diagnostics window and global function
+            builder.RegisterBuildCallback(c => GlobalMessagePipe.SetProvider(c.AsServiceProvider()));
         }
     }
 }
