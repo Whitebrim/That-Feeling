@@ -21,15 +21,6 @@
       "dependencies": {},
       "hash": "f057abff0f4ea52e4c9699c2831808d6c0a27bcc"
     },
-    "com.rfadeev.pumpeditor": {
-      "version": "https://github.com/rfadeev/pump-editor.git",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {
-        "com.unity.modules.jsonserialize": "1.0.0"
-      },
-      "hash": "c5ba87ad9fa09df09b02aa992124ebc44ded5365"
-    },
     "com.unity.addressables": {
       "version": "1.22.2",
       "depth": 0,
@@ -169,7 +160,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "388ebd40ed8ecb376552e07e35b1c82ef084d3ac"
+      "hash": "331f0bbb68da6e235b3c27cbc8fb15842bce7c2f"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",
