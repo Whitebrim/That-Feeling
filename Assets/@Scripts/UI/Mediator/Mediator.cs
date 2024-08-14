@@ -9,9 +9,9 @@ namespace UI.Mediator
         protected GameStateMachine StateMachine;
 
         [Inject]
-        protected void Construct(GameStateMachine StateMachine)
+        protected void Construct(GameStateMachine stateMachine)
         {
-            this.StateMachine = StateMachine;
+            this.StateMachine = stateMachine;
         }
     }
 }
