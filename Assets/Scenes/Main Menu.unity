@@ -417,6 +417,7 @@ GameObject:
   - component: {fileID: 609749139}
   - component: {fileID: 609749138}
   - component: {fileID: 609749137}
+  - component: {fileID: 609749140}
   m_Layer: 5
   m_Name: Play
   m_TagString: Untagged
@@ -538,6 +539,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 609749135}
   m_CullTransparentMesh: 1
+--- !u!114 &609749140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 609749135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb8d343ead75f29469016f4d2fdb2889, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sound:
+    clip:
+      m_AssetGUID: fb63461c92eebb3408ec7e7362e109dc
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    volume: 1
+    releaseKey: perm
 --- !u!1 &801417417
 GameObject:
   m_ObjectHideFlags: 0

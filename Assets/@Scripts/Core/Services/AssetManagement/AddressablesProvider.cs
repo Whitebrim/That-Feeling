@@ -26,7 +26,7 @@ namespace Core.Services.AssetManagement
         public static void LoadPrefabAsync<TObject>(AssetReferenceGameObject assetReference, Action<TObject> onLoad)
             where TObject : Object
         {
-            if (!Cache.ContainsKey(assetReference.AssetGUID))
+            if (!Cache.TryGetValue(assetReference.AssetGUID, out var asset))
             {
                 assetReference.LoadAssetAsync().Completed += (result) =>
                 {
@@ -36,7 +36,7 @@ namespace Core.Services.AssetManagement
                 return;
             }
 
-            onLoad?.Invoke((TObject)Cache[assetReference.AssetGUID]);
+            onLoad?.Invoke((TObject)asset);
         }
     }
 }

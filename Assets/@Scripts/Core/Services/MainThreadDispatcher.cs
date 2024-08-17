@@ -18,18 +18,18 @@ namespace Core.Services
 
         void Update()
         {
-            if(_queued) {
-                Action[] actions = null;
+            if (!_queued) return;
+            
+            Action[] actions = null;
 
-                lock(_actions) {
-                    actions = _actions.ToArray();
-                    _actions.Clear();
-                    _queued = false;
-                }
-
-                foreach (Action action in actions)
-                    action();
+            lock(_actions) {
+                actions = _actions.ToArray();
+                _actions.Clear();
+                _queued = false;
             }
+
+            foreach (Action action in actions)
+                action();
         }
     }
 }

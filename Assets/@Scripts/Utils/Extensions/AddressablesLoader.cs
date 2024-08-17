@@ -1,4 +1,6 @@
 using System.Threading.Tasks;
+using Core.Services.AssetManagement;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -10,53 +12,37 @@ namespace Utils.Extensions
         /// <summary>
         /// Возвращает закэшированный ассет или грузит его и кэширует
         /// </summary>
-        public static T LoadAndCache<T>(this AssetReference asset) where T : Object
+        public static T LoadAndCache<T>(this AssetReference asset, string releaseKey) where T : Object
         {
-            if (AddressablesCache.Instance.Cache.TryGetValue(asset, out var product))
-            {
-                return (T)product;
-            }
-            else
-            {
-                T result = Addressables.LoadAssetAsync<T>(asset.RuntimeKey).WaitForCompletion();
-                if (result != null)
-                    AddressablesCache.Instance.Cache[asset] = result;
-                return result;
-            }
+            if (asset.IsValid())
+                return asset.Asset as T;
+
+            AddressablesCache.Instance.AddAsset(asset, releaseKey);
+            return asset.LoadAssetAsync<T>().WaitForCompletion();
         }
 
         /// <summary>
         /// Возвращает закэшированный ассет или грузит его и кэширует
         /// </summary>
-        public static T LoadAndCache<T>(this AssetReferenceT<T> asset) where T : Object
+        public static T LoadAndCache<T>(this AssetReferenceT<T> asset, string releaseKey) where T : Object =>
+            LoadAndCache<T>((AssetReference)asset, releaseKey);
+
+        /// <summary>
+        /// Возвращает закэшированный ассет или ассинхронно грузит его и кэширует
+        /// </summary>
+        public static async UniTask<T> LoadAndCacheAsync<T>(this AssetReference asset, string releaseKey) where T : Object
         {
-            if (AddressablesCache.Instance.Cache.TryGetValue(asset, out var product))
-            {
-                return (T)product;
-            }
-            else
-            {
-                T result = Addressables.LoadAssetAsync<T>(asset.RuntimeKey).WaitForCompletion();
-                if (result != null)
-                    AddressablesCache.Instance.Cache[asset] = result;
-                return result;
-            }
+            if (asset.IsValid())
+                return asset.Asset as T;
+
+            AddressablesCache.Instance.AddAsset(asset, releaseKey);
+            return await asset.LoadAssetAsync<T>();
         }
 
-        public static async Task<T> LoadAndCacheAsync<T>(this AssetReferenceT<T> asset) where T : Object
-        {
-            if (AddressablesCache.Instance.Cache.TryGetValue(asset, out var product))
-            {
-                return (T)product;
-            }
-
-            AsyncOperationHandle<T> asyncOperation = Addressables.LoadAssetAsync<T>(asset.RuntimeKey);
-            asyncOperation.Completed += (x) =>
-            {
-                if (x.OperationException == null && x.Result != null) AddressablesCache.Instance.Cache[asset] = x.Result;
-            };
-        
-            return await asyncOperation.Task;
-        }
+        /// <summary>
+        /// Возвращает закэшированный ассет или ассинхронно грузит его и кэширует
+        /// </summary>
+        public static async UniTask<T> LoadAndCacheAsync<T>(this AssetReferenceT<T> asset, string releaseKey) where T : Object => 
+            await LoadAndCacheAsync<T>((AssetReference)asset, releaseKey);
     }
 }

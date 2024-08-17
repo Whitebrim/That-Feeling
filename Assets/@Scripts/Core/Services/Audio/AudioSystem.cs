@@ -12,19 +12,20 @@ namespace Core.Services.Audio
         {
             switch (audioType)
             {
-                case AudioType.MUSIC:
+                case AudioType.Music:
                     music.volume = value;
                     break;
-                case AudioType.SFX:
+                case AudioType.Sfx:
                     effects.volume = value;
                     break;
             }
         }
 
-        public void PlayClip(AudioBase sound, AudioType audioType, float volumeScale = 1)
+        public async void PlayClip(AudioBase sound, AudioType audioType)
         {
-            if (sound is null || sound.Clip is null) return;
-            PlayClip(sound.Clip.LoadAndCache(), audioType, volumeScale);
+            if (sound?.clip is null) return;
+            var clip = await sound.clip.LoadAndCacheAsync(sound.releaseKey);
+            PlayClip(clip, audioType, sound.volume);
         }
 
         public void PlayClip(AudioClip clip, AudioType audioType, float volumeScale = 1)
@@ -32,19 +33,13 @@ namespace Core.Services.Audio
             if (clip is null) return;
             switch (audioType)
             {
-                case AudioType.MUSIC:
+                case AudioType.Music:
                     music.PlayOneShot(clip, volumeScale);
                     break;
-                case AudioType.SFX:
+                case AudioType.Sfx:
                     effects.PlayOneShot(clip, volumeScale);
                     break;
             }
         }
-    }
-
-    public enum AudioType
-    {
-        MUSIC = 0,
-        SFX = 1
     }
 }

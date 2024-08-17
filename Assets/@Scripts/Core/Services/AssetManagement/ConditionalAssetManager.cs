@@ -15,7 +15,7 @@ namespace Core.Services.AssetManagement
     [Serializable]
     public class ConditionalAsset<TObj> where TObj : UnityEngine.Object
     {
-        public TObj Load => Debug.isDebugBuild ? debug.LoadAndCache() : release.LoadAndCache();
+        public TObj Load(string releaseKey) => Debug.isDebugBuild ? debug.LoadAndCache(releaseKey) : release.LoadAndCache(releaseKey);
 
         [SerializeField, HorizontalGroup(LabelWidth = 60, MarginLeft = 0.01f)] private AssetReferenceT<TObj> release;
         [SerializeField, HorizontalGroup(MarginLeft = 0.05f, MarginRight = 0.01f)] private AssetReferenceT<TObj> debug;

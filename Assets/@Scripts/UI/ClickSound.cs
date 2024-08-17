@@ -1,6 +1,8 @@
 using Core.Services.Audio;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
+using Utils.Extensions;
 using VContainer;
 using AudioType = Core.Services.Audio.AudioType;
 
@@ -10,7 +12,7 @@ namespace UI
     public class ClickSound : MonoBehaviour
     {
         [SerializeField] private AudioBase sound;
-        [SerializeField, Range(0, 1)] private float volume = 1;
+        [SerializeField] private bool preloadSoundClip = true;
         private Button _button;
         private AudioSystem _audioSystem;
 
@@ -26,6 +28,7 @@ namespace UI
 
             _button = GetComponent<Button>();
             InjectSound();
+            if (preloadSoundClip) PreloadSoundClip();
         }
 
         private void InjectSound()
@@ -33,9 +36,14 @@ namespace UI
             _button.onClick.AddListener(PlaySound);
         }
 
+        private async void PreloadSoundClip()
+        {
+            await sound.clip.LoadAndCacheAsync(sound.releaseKey);
+        }
+        
         private void PlaySound()
         {
-            _audioSystem.PlayClip(sound, AudioType.SFX, volume);
+            _audioSystem.PlayClip(sound, AudioType.Sfx);
         }
     }
 }
