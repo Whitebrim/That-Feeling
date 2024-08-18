@@ -1,8 +1,7 @@
 using Core.Services.SceneLoader;
-using Utils;
 using VContainer;
 
-namespace Core.Infrastructure.States
+namespace Core.Infrastructure.StateMachine.States
 {
     public class BootstrapState : IState
     {
@@ -16,13 +15,15 @@ namespace Core.Infrastructure.States
 
         public void Enter()
         {
-            EnterLoadLevel();
+            LoadMainMenu();
         }
 
-        public void Exit()
+        public void Exit(){}
+
+        private async void LoadMainMenu()
         {
+            await SceneLoader.LoadSceneAsync(SceneNameConstants.MainMenu);
+            _stateMachine.Enter<MainMenuState>();
         }
-
-        private void EnterLoadLevel() => _stateMachine.Enter<LoadLevelState, string>(SceneNameConstants.MainMenu);
     }
 }

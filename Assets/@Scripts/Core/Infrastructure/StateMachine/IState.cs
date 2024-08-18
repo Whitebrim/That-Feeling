@@ -1,4 +1,4 @@
-namespace Core.Infrastructure.States
+namespace Core.Infrastructure.StateMachine
 {
     public interface IBaseState
     {

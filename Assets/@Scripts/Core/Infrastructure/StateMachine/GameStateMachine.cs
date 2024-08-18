@@ -1,6 +1,6 @@
 using VContainer;
 
-namespace Core.Infrastructure.States
+namespace Core.Infrastructure.StateMachine
 {
     public class GameStateMachine
     {
@@ -15,13 +15,13 @@ namespace Core.Infrastructure.States
 
         public void Enter<TState>() where TState : class, IState
         {
-            IState state = ChangeState<TState>();
+            var state = ChangeState<TState>();
             state.Enter();
         }
 
         public void Enter<TState, TPayload>(TPayload payload) where TState : class, IPayloadedState<TPayload>
         {
-            TState state = ChangeState<TState>();
+            var state = ChangeState<TState>();
             state.Enter(payload);
         }
 
@@ -32,7 +32,7 @@ namespace Core.Infrastructure.States
         {
             _currentState?.Exit();
 
-            TState state = GetState<TState>();
+            var state = GetState<TState>();
             _currentState = state;
 
             return state;

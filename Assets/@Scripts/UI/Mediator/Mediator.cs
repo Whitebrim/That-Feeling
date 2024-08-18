@@ -1,4 +1,4 @@
-using Core.Infrastructure.States;
+using Core.Infrastructure.StateMachine;
 using UnityEngine;
 using VContainer;
 
@@ -11,7 +11,7 @@ namespace UI.Mediator
         [Inject]
         protected void Construct(GameStateMachine stateMachine)
         {
-            this.StateMachine = stateMachine;
+            StateMachine = stateMachine;
         }
     }
 }

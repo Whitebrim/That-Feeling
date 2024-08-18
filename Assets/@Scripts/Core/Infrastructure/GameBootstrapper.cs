@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
-using Core.Infrastructure.States;
+using Core.Infrastructure.StateMachine;
+using Core.Infrastructure.StateMachine.States;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;

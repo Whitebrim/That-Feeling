@@ -1,4 +1,5 @@
-using Core.Infrastructure.States;
+using Core.Infrastructure.StateMachine;
+using Core.Infrastructure.StateMachine.States;
 using Core.Services;
 using Core.Services.AssetManagement;
 using Core.Services.Audio;
@@ -30,7 +31,7 @@ namespace Core.Infrastructure.DI
 
             builder.Register<GameStateMachine>(Lifetime.Singleton);
             builder.Register<BootstrapState>(Lifetime.Singleton);
-            builder.Register<LoadLevelState>(Lifetime.Singleton);
+            builder.Register<MainMenuState>(Lifetime.Singleton);
             builder.Register<GameLoopState>(Lifetime.Singleton);
             
             RegisterMessagePipe(builder);

@@ -1,9 +1,8 @@
-using Core.Services.AssetManagement;
 using VContainer;
 
-namespace Core.Infrastructure.States
+namespace Core.Infrastructure.StateMachine.States
 {
-    public class GameLoopState : IState
+    public class MainMenuState : IState
     {
         private GameStateMachine _stateMachine;
 
@@ -13,12 +12,8 @@ namespace Core.Infrastructure.States
             _stateMachine = stateMachine;
         }
 
-        public void Enter()
-        {
-        }
+        public void Enter(){}
 
-        public void Exit()
-        {
-        }
+        public void Exit(){}
     }
 }
