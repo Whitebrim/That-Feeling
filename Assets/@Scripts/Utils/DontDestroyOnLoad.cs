@@ -7,6 +7,7 @@ namespace Utils
         private void Awake()
         {
             DontDestroyOnLoad(gameObject);
+            Destroy(this);
         }
     }
 }

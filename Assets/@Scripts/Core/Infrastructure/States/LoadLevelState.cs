@@ -6,16 +6,14 @@ namespace Core.Infrastructure.States
     public class LoadLevelState : IPayloadedState<string>
     {
         private GameStateMachine _stateMachine;
-        private ISceneLoader _sceneLoader;
 
         [Inject]
-        private void Construct(GameStateMachine stateMachine, ISceneLoader sceneLoader)
+        private void Construct(GameStateMachine stateMachine)
         {
             _stateMachine = stateMachine;
-            _sceneLoader = sceneLoader;
         }
 
-        public void Enter(string sceneName) => _sceneLoader.Load(sceneName, OnLoaded);
+        public async void Enter(string sceneName) => await SceneLoader.LoadSceneAsync(sceneName, OnLoaded);
 
         private void OnLoaded()
         {

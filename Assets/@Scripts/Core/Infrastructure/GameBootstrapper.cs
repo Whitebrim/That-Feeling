@@ -1,21 +1,17 @@
 using System;
+using System.Threading;
 using Core.Infrastructure.States;
-using Core.Services;
-using Core.Services.AssetManagement;
-using Core.Services.Audio;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using VContainer;
+using VContainer.Unity;
 
 namespace Core.Infrastructure
 {
-    [RequireComponent(typeof(MainThreadDispatcher), typeof(AudioSystem))]
-    public class GameBootstrapper : MonoBehaviour, ICoroutineRunner
+    public class GameBootstrapper : IAsyncStartable
     {
         public static bool IsInitialized;
-
-        [SerializeField] private ConditionalAssetManager assetManager;
         
         private GameStateMachine _stateMachine;
 
@@ -25,14 +21,11 @@ namespace Core.Infrastructure
             _stateMachine = stateMachine;
         }
         
-        // ReSharper disable once Unity.IncorrectMethodSignature
-        private async UniTaskVoid Start()
+        public async UniTask StartAsync(CancellationToken cancellation = default)
         {
             IsInitialized = true;
         
             await ApplicationInit();
-
-            DontDestroyOnLoad(this);
 
             _stateMachine.Enter<BootstrapState>();
         }

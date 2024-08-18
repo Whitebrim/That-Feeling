@@ -1,29 +1,16 @@
 using System;
-using System.Collections;
-using UnityEngine;
+using Cysharp.Threading.Tasks;
 using UnityEngine.SceneManagement;
-using VContainer;
 
 namespace Core.Services.SceneLoader
 {
-    public class SceneLoader : ISceneLoader
+    public class SceneLoader
     {
-        private ICoroutineRunner _coroutineRunner;
-
-        [Inject]
-        private void Construct(ICoroutineRunner coroutineRunner) =>
-            _coroutineRunner = coroutineRunner;
-
-        public void Load(string sceneName, Action onLoad = null) =>
-            _coroutineRunner.StartCoroutine(LoadScene(sceneName, onLoad));
-
-        private IEnumerator LoadScene(string sceneName, Action onLoad)
+        public static async UniTask LoadSceneAsync(string sceneName, Action onLoad)
         {
             if (SceneManager.GetActiveScene().name != sceneName)
             {
-                var waitSceneLoad = SceneManager.LoadSceneAsync(sceneName)!;
-
-                yield return new WaitUntil(() => waitSceneLoad.isDone);
+                await SceneManager.LoadSceneAsync(sceneName);
             }
 
             onLoad?.Invoke();
