@@ -40,7 +40,6 @@ namespace Core.Infrastructure.DI
             builder.Register<GameStateMachine>(Lifetime.Singleton);
 
             builder.Register<SceneLoader>(Lifetime.Singleton).AsImplementedInterfaces();
-            builder.Register<AddressablesProvider>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.RegisterInstance(conditionalAssetManager);
 
             RegisterMessagePipe(builder);

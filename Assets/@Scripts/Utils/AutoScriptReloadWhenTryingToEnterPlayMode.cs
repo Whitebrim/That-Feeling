@@ -2,10 +2,12 @@ using UnityEditor;
 
 namespace Utils
 {
+    /// <summary>
+    /// If `Preferences/Asset Pipeline/Auto Refresh` is Disabled, it recompiles all scripts when Play button is pressed.
+    /// </summary>
     [InitializeOnLoad]
     public class AutoScriptReloadWhenTryingToEnterPlayMode
     {
-        // register an event handler when the class is initialized
         static AutoScriptReloadWhenTryingToEnterPlayMode()
         {
             EditorApplication.playModeStateChanged += LogPlayModeState;
