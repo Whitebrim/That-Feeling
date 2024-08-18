@@ -19,7 +19,7 @@ namespace Core.Infrastructure.DI
         protected override void Configure(IContainerBuilder builder)
         {
             if (GameBootstrapper.IsInitialized) return;
-            builder.RegisterEntryPoint<GameBootstrapper>();
+            builder.RegisterEntryPoint<GameBootstrapper>(); // <-- Application entry point
 
             builder.Register<IObjectResolver, Container>(Lifetime.Scoped);
             
@@ -38,10 +38,8 @@ namespace Core.Infrastructure.DI
 
         private void RegisterMessagePipe(IContainerBuilder builder)
         {
-            // RegisterMessagePipe returns options.
-            var options = builder.RegisterMessagePipe(/* configure option */);
-        
-            // Setup GlobalMessagePipe to enable diagnostics window and global function
+            var options = builder.RegisterMessagePipe();
+            
             builder.RegisterBuildCallback(c => GlobalMessagePipe.SetProvider(c.AsServiceProvider()));
 
             builder.RegisterMessageBroker<OnApplicationFocusSignal>(options);
