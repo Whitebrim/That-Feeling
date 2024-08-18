@@ -1,4 +1,4 @@
-namespace Utils
+namespace Core.Services.SceneLoader
 {
     public static class SceneNameConstants
     {

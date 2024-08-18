@@ -21,7 +21,7 @@ namespace Core.Services.SceneLoader
         {
             if (SceneManager.GetActiveScene().name != sceneName)
             {
-                AsyncOperation waitSceneLoad = SceneManager.LoadSceneAsync(sceneName);
+                var waitSceneLoad = SceneManager.LoadSceneAsync(sceneName)!;
 
                 yield return new WaitUntil(() => waitSceneLoad.isDone);
             }

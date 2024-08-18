@@ -10,7 +10,7 @@ namespace Utils
         [Button]
         void Start()
         {
-            _mainCamera = Camera.main;
+            _mainCamera = Camera.main!;
             Vector3 cameraPosition = _mainCamera.transform.position;
             transform.position = new Vector3(cameraPosition.x, cameraPosition.y, 0);
             Vector3 bottomLeft = _mainCamera.ViewportToWorldPoint(Vector3.zero) * 100;

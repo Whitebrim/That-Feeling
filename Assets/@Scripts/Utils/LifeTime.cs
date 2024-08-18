@@ -4,11 +4,11 @@ namespace Utils
 {
     public class LifeTime : MonoBehaviour
     {
-        public float Life = 0.1f;
+        public float life = 0.1f;
 
-        void Start()
+        private void Start()
         {
-            Destroy(gameObject, Life);
+            Destroy(gameObject, life);
         }
 
     }

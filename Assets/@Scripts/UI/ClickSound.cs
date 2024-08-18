@@ -1,6 +1,5 @@
 using Core.Services.Audio;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Utils.Extensions;
 using VContainer;
