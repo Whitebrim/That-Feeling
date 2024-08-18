@@ -1,9 +1,7 @@
-using System.Threading.Tasks;
 using Core.Services.AssetManagement;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Utils.Extensions
 {
@@ -22,7 +20,7 @@ namespace Utils.Extensions
             if (asset.IsValid())
                 return asset.Asset as T;
 
-            AddressablesCache.Instance.AddAsset(asset, releaseKey);
+            AddressablesCache.AddAsset(asset, releaseKey);
             return asset.LoadAssetAsync<T>().WaitForCompletion();
         }
 
@@ -50,7 +48,7 @@ namespace Utils.Extensions
             if (asset.IsValid())
                 return asset.Asset as T;
 
-            AddressablesCache.Instance.AddAsset(asset, releaseKey);
+            AddressablesCache.AddAsset(asset, releaseKey);
             return await asset.LoadAssetAsync<T>();
         }
 

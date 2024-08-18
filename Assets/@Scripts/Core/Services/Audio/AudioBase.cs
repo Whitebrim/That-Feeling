@@ -1,10 +1,11 @@
+using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
 namespace Core.Services.Audio
 {
-    [System.Serializable]
+    [Serializable]
     public class AudioBase
     {
         [Required] public AssetReferenceT<AudioClip> clip;
