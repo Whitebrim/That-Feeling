@@ -10,20 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Default Local Group
+  m_Name: Permanent
   m_EditorClassIdentifier: 
-  m_GroupName: Default Local Group
+  m_GroupName: Permanent
   m_Data:
     m_SerializedData: []
   m_GUID: 205d943ddc117c748875293bd50e6963
   m_SerializeEntries:
+  - m_GUID: 3415a8501ed42ef42b9a0fdb592028af
+    m_Address: Assets/Art/Toga Debugger.jpg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fb63461c92eebb3408ec7e7362e109dc
     m_Address: Ceramic_Menu_Button
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 10f25cd62c7ef594384c13217abb6d2d, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: d20c181e321a5d3449133c9a3375f803, type: 2}
     - {fileID: 11400000, guid: 091acf0809a48a446bac0ccec496f97d, type: 2}
+    - {fileID: 11400000, guid: d20c181e321a5d3449133c9a3375f803, type: 2}

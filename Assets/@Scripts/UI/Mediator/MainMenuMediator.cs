@@ -6,7 +6,7 @@ namespace UI.Mediator
 {
     public class MainMenuMediator : Mediator
     {
-        [Button("Play")]
+        [Button("Play", ButtonSizes.Medium)]
         public async void Play()
         {
             await SceneLoader.LoadSceneAsync(SceneNameConstants.Game);
