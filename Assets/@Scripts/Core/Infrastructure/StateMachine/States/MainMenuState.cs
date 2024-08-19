@@ -1,3 +1,4 @@
+using Core.Services.AssetManagement;
 using VContainer;
 
 namespace Core.Infrastructure.StateMachine.States
@@ -14,6 +15,9 @@ namespace Core.Infrastructure.StateMachine.States
 
         public void Enter(){}
 
-        public void Exit(){}
+        public void Exit()
+        {
+            AddressablesCache.ReleaseAssets(ReleaseKey.MainMenu);
+        }
     }
 }
