@@ -1,16 +1,51 @@
 using Core.Infrastructure.StateMachine.States;
-using Core.Services.SceneLoader;
+using Core.Signals;
+using MessagePipe;
 using Sirenix.OdinInspector;
+using UnityEngine;
+using VContainer;
 
 namespace UI.Mediator
 {
     public class MainMenuMediator : Mediator
     {
-        [Button("Play", ButtonSizes.Medium)]
-        public async void Play()
+        [Inject] private readonly ISubscriber<UIType, ChangeUIVisibilitySignal> _changeUIVisibilitySignal;
+
+        [SerializeField] private GameObject mainMenuUI;
+        [SerializeField] private GameObject selectLevelUI;
+        
+        private void Awake()
         {
-            await SceneLoader.LoadSceneAsync(SceneNameConstants.Game);
-            StateMachine.Enter<GameLoopState>();
+            var bag = DisposableBag.CreateBuilder();
+            _changeUIVisibilitySignal.Subscribe(UIType.MainMenu, signal => mainMenuUI.SetActive(signal.Visible)).AddTo(bag);
+            _changeUIVisibilitySignal.Subscribe(UIType.SelectLevel, signal => selectLevelUI.SetActive(signal.Visible)).AddTo(bag);
+            Disposable = bag.Build();
+        }
+        
+        [Button(ButtonSizes.Medium)]
+        public void OpenSelectLevel()
+        {
+            StateMachine.Enter<SelectLevelState>();
+        }
+
+        [Button(ButtonSizes.Medium)]
+        public void OpenMainMenu()
+        {
+            StateMachine.Enter<MainMenuState>();
+        }
+        
+        [Button(ButtonSizes.Medium)]
+        public void EnterLevel(int level)
+        {
+            if (StateMachine.CurrentState is SelectLevelState state)
+            {
+                state.EnterLevel((Levels)level);
+            }
+            else
+            {
+                StateMachine.Enter<SelectLevelState>();
+                EnterLevel(level);
+            }
         }
     }
 }

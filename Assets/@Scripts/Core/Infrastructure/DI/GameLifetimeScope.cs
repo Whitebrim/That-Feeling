@@ -3,7 +3,6 @@ using Core.Infrastructure.StateMachine.States;
 using Core.Services;
 using Core.Services.AssetManagement;
 using Core.Services.Audio;
-using Core.Signals;
 using MessagePipe;
 using UnityEngine;
 using VContainer;
@@ -20,7 +19,7 @@ namespace Core.Infrastructure.DI
         protected override void Configure(IContainerBuilder builder)
         {
             if (GameBootstrapper.IsInitialized) return;
-            builder.RegisterEntryPoint<GameBootstrapper>(); // <-- Application entry point
+            builder.RegisterEntryPoint<GameBootstrapper>();//<-- Application entry point
 
             builder.Register<IObjectResolver, Container>(Lifetime.Scoped);
             
@@ -32,7 +31,9 @@ namespace Core.Infrastructure.DI
             builder.Register<GameStateMachine>(Lifetime.Singleton);
             builder.Register<BootstrapState>(Lifetime.Singleton);
             builder.Register<MainMenuState>(Lifetime.Singleton);
-            builder.Register<GameLoopState>(Lifetime.Singleton);
+            builder.Register<SelectLevelState>(Lifetime.Singleton);
+            
+            builder.Register<Level1State>(Lifetime.Singleton);
             
             RegisterMessagePipe(builder);
         }
@@ -42,8 +43,6 @@ namespace Core.Infrastructure.DI
             var options = builder.RegisterMessagePipe();
             
             builder.RegisterBuildCallback(c => GlobalMessagePipe.SetProvider(c.AsServiceProvider()));
-
-            builder.RegisterMessageBroker<OnApplicationFocusSignal>(options);
         }
     }
 }

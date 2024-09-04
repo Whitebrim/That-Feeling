@@ -1,3 +1,4 @@
+using System;
 using Core.Infrastructure.StateMachine;
 using UnityEngine;
 using VContainer;
@@ -6,12 +7,13 @@ namespace UI.Mediator
 {
     public abstract class Mediator : MonoBehaviour
     {
-        protected GameStateMachine StateMachine;
+        [Inject] protected readonly GameStateMachine StateMachine;
 
-        [Inject]
-        protected void Construct(GameStateMachine stateMachine)
+        protected IDisposable Disposable;
+
+        public void OnDestroy()
         {
-            StateMachine = stateMachine;
+            Disposable?.Dispose();
         }
     }
 }

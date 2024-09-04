@@ -14,13 +14,7 @@ namespace Core.Infrastructure
     {
         public static bool IsInitialized;
         
-        private GameStateMachine _stateMachine;
-
-        [Inject]
-        private void Construct(GameStateMachine stateMachine)
-        {
-            _stateMachine = stateMachine;
-        }
+        [Inject] private readonly GameStateMachine _stateMachine;
         
         public async UniTask StartAsync(CancellationToken cancellation = default)
         {

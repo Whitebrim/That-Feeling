@@ -4,14 +4,9 @@ namespace Core.Infrastructure.StateMachine
 {
     public class GameStateMachine
     {
-        private IObjectResolver _resolver;
-        private IBaseState _currentState;
-
-        [Inject]
-        private void Construct(IObjectResolver resolver)
-        {
-            _resolver = resolver;
-        }
+        [Inject] private readonly IObjectResolver _resolver;
+        
+        public IBaseState CurrentState { get; private set; }
 
         public void Enter<TState>() where TState : class, IState
         {
@@ -30,10 +25,10 @@ namespace Core.Infrastructure.StateMachine
 
         private TState ChangeState<TState>() where TState : class, IBaseState
         {
-            _currentState?.Exit();
+            CurrentState?.Exit();
 
             var state = GetState<TState>();
-            _currentState = state;
+            CurrentState = state;
 
             return state;
         }
