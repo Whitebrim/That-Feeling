@@ -1,4 +1,6 @@
 using Core.Infrastructure.StateMachine;
+using Sirenix.OdinInspector;
+using Sirenix.OdinInspector.Editor;
 using UnityEditor;
 using UnityEngine;
 using VContainer;
@@ -6,7 +8,7 @@ using VContainer.Unity;
 
 namespace Editor
 {
-    public class StateMachineDiagnosticsWindow : EditorWindow
+    public class StateMachineDiagnosticsWindow : OdinEditorWindow
     {
         private IObjectResolver _resolver;
         private GameStateMachine _stateMachine;
@@ -18,13 +20,15 @@ namespace Editor
             GetWindow<StateMachineDiagnosticsWindow>("State Machine Diagnostics");
         }
 
-        private void OnEnable()
+        protected override void OnEnable()
         {
+            base.OnEnable();
             EditorApplication.update += UpdateState;
         }
 
-        private void OnDisable()
+        protected override void OnDisable()
         {
+            base.OnDisable();
             EditorApplication.update -= UpdateState;
         }
 
@@ -44,8 +48,9 @@ namespace Editor
             Repaint();
         }
 
-        private void OnGUI()
+        protected override void OnImGUI()
         {
+            base.OnImGUI();
             if (!Application.isPlaying)
             {
                 GUILayout.Label("Enter Play Mode");
@@ -72,6 +77,12 @@ namespace Editor
             };
 
             GUILayout.Label(_currentStateName, stateStyle);
+        }
+
+        protected override object GetTarget()
+        {
+            if (_stateMachine == null) return this;
+            return _stateMachine.CurrentState;
         }
     }
 }

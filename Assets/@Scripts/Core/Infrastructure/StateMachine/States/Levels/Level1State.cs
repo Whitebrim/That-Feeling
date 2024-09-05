@@ -1,7 +1,7 @@
 using Core.Services.AssetManagement;
 using VContainer;
 
-namespace Core.Infrastructure.StateMachine.States
+namespace Core.Infrastructure.StateMachine.States.Levels
 {
     public class Level1State : IState
     {

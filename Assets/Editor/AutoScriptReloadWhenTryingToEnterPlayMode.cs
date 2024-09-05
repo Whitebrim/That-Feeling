@@ -1,7 +1,7 @@
 #if UNITY_EDITOR
 using UnityEditor;
 
-namespace Utils
+namespace Editor
 {
     /// <summary>
     /// If `Preferences/Asset Pipeline/Auto Refresh` is Disabled, it recompiles all scripts when Play button is pressed.

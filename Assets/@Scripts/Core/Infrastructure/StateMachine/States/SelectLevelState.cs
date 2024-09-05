@@ -1,6 +1,10 @@
+using Core.Infrastructure.StateMachine.States.Levels;
 using Core.Services.SceneLoader;
 using Core.Signals;
+using Cysharp.Threading.Tasks;
+using Levels;
 using MessagePipe;
+using Sirenix.OdinInspector;
 using UI;
 using VContainer;
 
@@ -21,13 +25,14 @@ namespace Core.Infrastructure.StateMachine.States
             _changeUIVisibilitySignal.Publish(UIType.SelectLevel, new ChangeUIVisibilitySignal{Visible = false});
         }
 
-        public async void EnterLevel(Levels level)
+        [Button(ButtonSizes.Medium)]
+        public async UniTask EnterLevel(Level level)
         {
             await SceneLoader.LoadSceneAsync(SceneNameConstants.Game);
             
             switch (level)
             {
-                case Levels.L1:
+                case Level.L1:
                     _stateMachine.Enter<Level1State>();
                     break;
             }
