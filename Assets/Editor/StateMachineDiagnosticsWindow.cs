@@ -53,6 +53,7 @@ namespace Editor
             base.OnImGUI();
             if (!Application.isPlaying)
             {
+                _stateMachine = null;
                 GUILayout.Label("Enter Play Mode");
                 return;
             }
